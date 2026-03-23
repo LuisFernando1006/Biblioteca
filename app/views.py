@@ -1,8 +1,18 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.views import View
 from django.contrib import messages
 
-from .models import Livro, Emprestimo, Cidade, Autor, Editora, Leitor, Genero
+from .models import (
+    Livro,
+    Emprestimo,
+    Cidade,
+    Autor,
+    Editora,
+    Leitor,
+    Genero
+)
+
 from .forms import LivroForm
 
 
@@ -52,20 +62,79 @@ class GenerosView(View):
         generos = Genero.objects.all()
         return render(request, 'genero.html', {'generos': generos})
 
-class EditarLivroView(View):
-    template_name = 'editar_livro.html'
-    def get(self, request, id, *args, **kwargs):
-        livro = get_object_or_404(Livro, id=id)
-        form = LivroForm(instance=livro)
-        return render(request, self.template_name, {'livro': livro,'form': form})
-    def post(self, request, id, *args, **kwargs):
-        livro = get_object_or_404(Livro, id=id)
-        form = LivroForm(request.POST, instance=livro)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'As edições foram salvas com sucesso.')
-            return redirect('editar', id=id) # Redirecionar de volta para a página de edição
-        else:
-            messages.error(request, 'Corrija os erros no formulário antes de enviar novamente.')
-            return render(request, self.template_name, {'livro': livro,'form': form})
 
+class EditarLivroView(View):
+
+    template_name = 'editar_livro.html'
+
+    def get(self, request, id, *args, **kwargs):
+
+        livro = get_object_or_404(
+            Livro,
+            id=id
+        )
+
+        form = LivroForm(
+            instance=livro
+        )
+
+        return render(
+            request,
+            self.template_name,
+            {
+                'livro': livro,
+                'form': form
+            }
+        )
+
+    def post(self, request, id, *args, **kwargs):
+
+        livro = get_object_or_404(
+            Livro,
+            id=id
+        )
+
+        form = LivroForm(
+            request.POST,
+            instance=livro
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(
+                request,
+                'As edições foram salvas com sucesso.'
+            )
+
+            return redirect(
+                'editar',
+                id=id
+            )
+
+        else:
+
+            messages.error(
+                request,
+                'Corrija os erros no formulário antes de enviar novamente.'
+            )
+
+            return render(
+                request,
+                self.template_name,
+                {
+                    'livro': livro,
+                    'form': form
+                }
+            )
+
+class DeleteLivroView(View):
+    def get(self, request, id):
+
+        livro = Livro.objects.filter(id=id).first()
+
+        if livro:
+            livro.delete()
+
+        return redirect('livros')

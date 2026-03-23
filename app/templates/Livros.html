@@ -75,6 +75,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <p>Total de livros: {{ livros|length }}</p>
                     <th scope="col">Nome</th>
                     <th scope="col">Autor</th>
                     <th scope="col">Editora</th>
@@ -82,6 +83,8 @@
                     <th scope="col">Preço</th>
                     <th scope="col">Data Publicação</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Excluir</th>
+                    <th scope="col">Editar</th>
                 </tr>
             </thead>
 
@@ -93,8 +96,19 @@
                     <td>{{ livros.editora }}</td>
                     <td>{{ livros.genero }}</td>
                     <td>{{ livros.preco }}</td>
-                    <td>{{ livros.data_plub }}</td>
+                    <td>{{ livros.data_publicacao }}</td>
                     <td>{{ livros.status }}</td>
+                    <td>
+                        <a href="{% url 'delete' livros.id %}" class="btn btn-danger">
+                            Excluir
+                        </a>
+                    </td>
+            
+                    <td>
+                        <a href="{% url 'editar' livros.id %}" class="btn btn-primary">
+                            Editar
+                        </a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

@@ -75,26 +75,22 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Autor</th>
-                    <th scope="col">Editora</th>
-                    <th scope="col">Gênero</th>
-                    <th scope="col">Preço</th>
-                    <th scope="col">Data Publicação</th>
-                    <th scope="col">Status</th>
+                    <th scope="col">Livro</th>
+                    <th scope="col">Leitor</th>
+                    <th scope="col">Data_Emprestimo</th>
+                    <th scope="col">Data_Devolução</th>
+                    <th scope="col">Devolvido</th>
                 </tr>
             </thead>
 
             <tbody>
-                {% for livros in Cidade %}
+                {% for livros in Emprestimo %}
                 <tr>
-                    <td>{{ livros.nome }}</td>
-                    <td>{{ livros.autor }}</td>
-                    <td>{{ livros.editora }}</td>
-                    <td>{{ livros.genero }}</td>
-                    <td>{{ livros.preco }}</td>
-                    <td>{{ livros.data_plub }}</td>
-                    <td>{{ livros.status }}</td>
+                    <td>{{ livros.livro }}</td>
+                    <td>{{ livros.leitor }}</td>
+                    <td>{{ livros.data_emprestimo }}</td>
+                    <td>{{ livros.data_devolucao }}</td>
+                    <td>{{ livros.devolvido }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
